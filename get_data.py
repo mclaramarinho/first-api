@@ -1,8 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from unidecode import unidecode
-driver = webdriver.Chrome()
-query = "Novalgina Infantil".lower().replace(" ", "_")
+
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+
+driver = webdriver.Chrome(options=options)
 
 def get_data (query):
     url = f"https://www.bulario.com/{query}"
