@@ -1,4 +1,4 @@
 Flask
 Gunicorn
-Selenium~=4.15.2
-Unidecode~=1.3.7
+Selenium
+Unidecode
