@@ -8,5 +8,5 @@ app = Flask(__name__)
 def exec():
     name = request.args.get("name")
     res = make_response(get_data(name))
-    res.status_code = 201
+    res.status_code = 200
     return res
