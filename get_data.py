@@ -9,15 +9,17 @@ options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(options=options)
 
 def get_data (query):
+
     url = f"https://www.bulario.com/{query}"
 
     driver.get(url)
-
     data = driver.find_elements(By.CSS_SELECTOR, 'a[name="composicao"] ~ p > strong')
 
     vehicles = driver.find_elements(By.CSS_SELECTOR, 'a[name="composicao"] ~ p')
-
+    response = {}
     filtered_veh = []
+    data_array = []
+
     for p in vehicles:
         if ("(Excipientes: " in p.text) or ("(Veículos: " in p.text):
             formatted = p.text.replace("(", "")
@@ -25,18 +27,17 @@ def get_data (query):
             formatted = unidecode(formatted)
             filtered_veh.append(formatted)
 
-    data_array = []
     for item in data:
         index = data.index(item)
-        current_object = {}
         if index != len(data)-1:
             current_object = {
             "presentation": item.text,
             "vehicles": filtered_veh[index]
             }
-
+            data_array.append(current_object)
         else:
-            current_object = {"lab": item.text}
-        data_array.append(current_object)
+            response["lab"] = item.text
 
-    return data_array
+    response["content"] = data_array
+
+    return response
